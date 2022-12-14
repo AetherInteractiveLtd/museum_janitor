@@ -27,9 +27,11 @@ export namespace CameraController {
     const EYE_OFFSET: Vector3 = new Vector3();
     const state: CameraState = new CameraState();
 
+    let cam: Camera;
+
     export function initialise(): void {
-        let camera = Workspace.CurrentCamera!;
-        camera.CameraType = Enum.CameraType.Scriptable;
+        cam = Workspace.CurrentCamera!;
+        cam.CameraType = Enum.CameraType.Scriptable;
     }
 
     export function registerInputListeners(): void {
@@ -39,6 +41,8 @@ export namespace CameraController {
         })
     }
 
+    initialise();
+
     export function update(c: MovementState): void {
         let time: number = tick();
         let position: Vector3 = c.getPosition();
@@ -47,6 +51,8 @@ export namespace CameraController {
         let bob: Vector3 = state.bob(time);
         // apply rotation to make sure we face the correct way
         // offset rotation using pos.getVelocity();
+
+        cam.CFrame = new CFrame(c.getPosition());
     }
 
 }

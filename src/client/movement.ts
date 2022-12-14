@@ -2,7 +2,7 @@ import { Players, RunService, UserInputService, Workspace } from "@rbxts/service
 import Spring from "./spring";
 
 
-const walkspeed = 1.5;
+const walkspeed = 0.4;
 
 export class MovementState {
     public increase: Vector3 = new Vector3();
@@ -17,7 +17,7 @@ export class MovementState {
     }
 
     public addIncrease(vel: Vector3) {
-        this.increase.add(vel);
+        this.increase = this.increase.add(vel);
     }
 
     public getIncrease() {
@@ -41,7 +41,7 @@ export class MovementState {
     }
 
     public getPosition() {
-        return new Vector3(this.pos.X, 10, this.pos.Y);
+        return new Vector3(this.pos.X, 10, this.pos.Z);
     }
 
     public setPosition(pos: Vector3) {
@@ -54,7 +54,7 @@ export class MovementState {
 }
 
 export namespace MovementController {
-    const state = new MovementState();
+    export const state = new MovementState();
     
     export function character(): Model {
         return Players.LocalPlayer.Character as Model;
@@ -64,26 +64,26 @@ export namespace MovementController {
         return UserInputService.IsKeyDown(k);
     }
 
-    export function updateControls(): void {
+    export function updateControls(): Vector3 {
         state.resetIncrease();
-        let delta: Vector3 = new Vector3(
-
-        )
+        let delta: Vector3 = new Vector3()
 
         if (kd(Enum.KeyCode.W)) {
-            delta.add(new Vector3(1, 0, 0));
+            delta = delta.add(new Vector3(1, 0, 0));
         }
         if (kd(Enum.KeyCode.S)) {
-            delta.add(new Vector3(-1, 0, 0));
+            delta = delta.add(new Vector3(-1, 0, 0));
         }
         if (kd(Enum.KeyCode.A)) {
-            delta.add(new Vector3(0, 0, 1));
+            delta = delta.add(new Vector3(0, 0, 1));
         }
         if (kd(Enum.KeyCode.D)) {
-            delta.add(new Vector3(0, 0, -1));
+            delta = delta.add(new Vector3(0, 0, -1));
         }
 
         state.addIncrease(delta);
+
+        return delta;
     }
 
     const part = new Instance("Part");
@@ -93,9 +93,9 @@ export namespace MovementController {
 
     let i = 0;
     export function update(dt: number): void {
-        updateControls();
-
         i++;
+
+        updateControls();
 
         const increase = state.getIncrease();
 
@@ -106,5 +106,9 @@ export namespace MovementController {
 
         let pos = state.getPosition();
         part.CFrame = new CFrame(pos);
+
+        if (i % 5) {
+            print(increase, newVelocity, state.increase);
+        }
     }
 }
