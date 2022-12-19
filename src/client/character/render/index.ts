@@ -3,7 +3,7 @@ import { CharacterWrapper } from "./character";
 import { RunService, Workspace } from "@rbxts/services";
 import { PreRender } from "../prerender";
 
-class Render {
+export class Render {
 	private readonly _camera: CameraWrapper = new CameraWrapper(Workspace.CurrentCamera!);
 	private readonly _character: CharacterWrapper = new CharacterWrapper();
 	private readonly _connection: RBXScriptConnection;

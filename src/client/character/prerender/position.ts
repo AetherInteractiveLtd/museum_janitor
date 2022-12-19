@@ -5,8 +5,11 @@ export class Position {
 
 	private updateBreatheOffset(): void {}
 
+	private updatePosition(movement: Vector3): void {}
+
 	public update(movement: Vector3): void {
 		this.updateBreatheOffset();
+		this.updatePosition(movement);
 	}
 
 	public getPosition(): Vector3 {

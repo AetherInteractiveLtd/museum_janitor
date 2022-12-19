@@ -25,15 +25,9 @@ export class PreRender {
 		this._connection.Disconnect();
 	}
 
-	public position(): Vector3 {
-		return this._position.getPosition();
-	}
+	public position = this._position.getPosition;
 
-	public rotation(): CFrame {
-		return this._rotation.getRotation();
-	}
+	public rotation = this._rotation.getRotation;
 
-	public breatheOffset(): Vector3 {
-		return this._position.getBreatheOffset();
-	}
+	public breatheOffset = this._position.getBreatheOffset;
 }
