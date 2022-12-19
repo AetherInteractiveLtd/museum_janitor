@@ -3,7 +3,7 @@ import { Rotation } from "./rotation";
 import { Input } from "./input";
 import { RunService } from "@rbxts/services";
 
-const START_POSITION = new Vector3(0, 0, 0);
+const START_POSITION = new Vector3(0, 3, 0);
 const START_ROTATION = new Vector2(0, 0);
 const PRE_RENDER = RunService.Heartbeat;
 
@@ -31,6 +31,8 @@ export class PreRender {
 	public position = this._position.getPosition;
 
 	public rotation = this._rotation.getRotation;
+
+	public flatRotation = this._rotation.getFlatRotation;
 
 	public breatheOffset = this._position.getBreatheOffset;
 }

@@ -9,6 +9,10 @@ export class Rotation {
 		return CFrame.Angles(0, this._rotation.X, 0).mul(CFrame.Angles(this._rotation.Y, 0, 0));
 	}
 
+	public getFlatRotation(): CFrame {
+		return CFrame.Angles(0, this._rotation.X, 0);
+	}
+
 	public update(rotation: Vector2): CFrame {
 		const scaledRotation: Vector2 = rotation.mul(ROTATION_SENSITIVITY);
 		this._rotation = new Vector2(

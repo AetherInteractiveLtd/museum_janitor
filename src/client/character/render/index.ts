@@ -14,10 +14,9 @@ export class Render {
 
 	private update(_: number): void {
 		const position = this._preRender.position();
-		const rotation = this._preRender.rotation();
 		const breatheOffset = this._preRender.breatheOffset();
-		this._camera.update(position.add(breatheOffset), rotation);
-		this._character.update(position, rotation);
+		this._camera.update(position.add(breatheOffset), this._preRender.rotation());
+		this._character.update(position, this._preRender.flatRotation());
 	}
 
 	public destroy(): void {
