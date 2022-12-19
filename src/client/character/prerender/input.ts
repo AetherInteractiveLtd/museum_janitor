@@ -1,3 +1,5 @@
+import { UserInputService, Workspace } from "@rbxts/services";
+
 export class Input {
 	/*   This class is used to encapsulate user input
 	 *   Input is cached after computation step */
@@ -6,9 +8,17 @@ export class Input {
 
 	private updateMoveDirection(): void {}
 
-	private updateRotationDirection(): void {}
+	private updateRotationDirection(): void {
+		if (!Workspace.CurrentCamera) return;
+		const viewportSize = Workspace.CurrentCamera.ViewportSize;
+		if (viewportSize.X === 0 || viewportSize.Y === 0) return;
+		this._rotationDirection = UserInputService.GetMouseDelta().div(Workspace.CurrentCamera.ViewportSize);
+	}
 
-	public update(dt: number): void {}
+	public update(dt: number): void {
+		this.updateMoveDirection();
+		this.updateRotationDirection();
+	}
 
 	/*   This function returns the direction of movement
 	 *   of the character in local space (relative to the

@@ -4,7 +4,8 @@ import { Input } from "./input";
 import { RunService } from "@rbxts/services";
 
 const START_POSITION = new Vector3(0, 0, 0);
-const START_ROTATION = new CFrame(0, 0, 0);
+const START_ROTATION = new Vector2(0, 0);
+const PRE_RENDER = RunService.Heartbeat;
 
 export class PreRender {
 	private readonly _position: Position = new Position(START_POSITION);
@@ -13,12 +14,14 @@ export class PreRender {
 	private readonly _connection: RBXScriptConnection;
 
 	constructor() {
-		this._connection = RunService.Heartbeat.Connect((dt) => {
-			this._input.update(dt);
-			const updatedRotation: CFrame = this._rotation.update(this._input.getRotationDirection().mul(dt));
-			const localMovement: Vector3 = updatedRotation.PointToObjectSpace(this._input.getMoveDirection().mul(dt));
-			this._position.update(localMovement);
-		});
+		this._connection = PRE_RENDER.Connect(this.update);
+	}
+
+	private update(dt: number): void {
+		this._input.update(dt);
+		const updatedRotation: CFrame = this._rotation.update(this._input.getRotationDirection().mul(dt));
+		const localMovement: Vector3 = updatedRotation.PointToObjectSpace(this._input.getMoveDirection().mul(dt));
+		this._position.update(localMovement);
 	}
 
 	public destroy(): void {
