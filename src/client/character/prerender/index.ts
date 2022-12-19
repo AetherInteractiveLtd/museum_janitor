@@ -18,10 +18,10 @@ export class PreRender {
 	}
 
 	private update(dt: number): void {
-		this._input.update(dt);
+		this._input.update();
 		const updatedRotation: CFrame = this._rotation.update(this._input.getRotationDirection().mul(dt));
 		const localMovement: Vector3 = updatedRotation.PointToObjectSpace(this._input.getMoveDirection().mul(dt));
-		this._position.update(localMovement);
+		this._position.update(dt, localMovement);
 	}
 
 	public destroy(): void {
