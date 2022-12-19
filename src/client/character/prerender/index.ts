@@ -14,7 +14,7 @@ export class PreRender {
 	private readonly _connection: RBXScriptConnection;
 
 	constructor() {
-		this._connection = PRE_RENDER.Connect(this.update);
+		this._connection = PRE_RENDER.Connect((dt: number) => this.update(dt));
 	}
 
 	private update(dt: number): void {
@@ -28,11 +28,11 @@ export class PreRender {
 		this._connection.Disconnect();
 	}
 
-	public position = this._position.getPosition;
+	public position = () => this._position.getPosition();
 
-	public rotation = this._rotation.getRotation;
+	public rotation = () => this._rotation.getRotation();
 
-	public flatRotation = this._rotation.getFlatRotation;
+	public flatRotation = () => this._rotation.getFlatRotation();
 
-	public breatheOffset = this._position.getBreatheOffset;
+	public breatheOffset = () => this._position.getBreatheOffset();
 }

@@ -9,10 +9,10 @@ export class Render {
 	private readonly _connection: RBXScriptConnection;
 
 	constructor(private readonly _preRender: PreRender) {
-		this._connection = RunService.RenderStepped.Connect(this.update);
+		this._connection = RunService.RenderStepped.Connect((_: number) => this.update());
 	}
 
-	private update(_: number): void {
+	private update(): void {
 		const position = this._preRender.position();
 		const breatheOffset = this._preRender.breatheOffset();
 		this._camera.update(position.add(breatheOffset), this._preRender.rotation());

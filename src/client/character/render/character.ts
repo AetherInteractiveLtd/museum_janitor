@@ -7,5 +7,5 @@ export class CharacterWrapper {
 		this.visual.update(new CFrame(position).mul(flatRotation));
 	}
 
-	public destroy = this.visual.destroy;
+	public destroy = () => this.visual.destroy();
 }
